@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1uxnoo9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.6.1">
+  <bpmn:collaboration id="Collaboration_1xx6mtc">
+    <bpmn:participant id="Participant_1p9bpg5" name="usuario" processRef="Process_0nxcmqm" />
+    <bpmn:participant id="Participant_15j7tma" name="sistema" processRef="Process_12qeyhc" />
+    <bpmn:messageFlow id="Flow_03iqa8z" sourceRef="Activity_0yg06c8" targetRef="Activity_028bv0h" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0nxcmqm" isExecutable="false">
+    <bpmn:startEvent id="Event_1hbbttz">
+      <bpmn:outgoing>Flow_15fwbmc</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_15fwbmc" sourceRef="Event_1hbbttz" targetRef="Activity_0yg06c8" />
+    <bpmn:task id="Activity_0yg06c8" name="Solicitação de recebimento">
+      <bpmn:incoming>Flow_15fwbmc</bpmn:incoming>
+    </bpmn:task>
+  </bpmn:process>
+  <bpmn:process id="Process_12qeyhc">
+    <bpmn:task id="Activity_028bv0h" name="Gerar QR code">
+      <bpmn:outgoing>Flow_1b0wowx</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1b0wowx" sourceRef="Activity_028bv0h" targetRef="Activity_0hknll0" />
+    <bpmn:sequenceFlow id="Flow_1ejdtat" sourceRef="Activity_0hknll0" targetRef="Activity_1uowisi" />
+    <bpmn:endEvent id="Event_17pkxu9">
+      <bpmn:property id="Property_0we2s0b" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0csaqft">
+        <bpmn:sourceRef>DataStoreReference_0rce1no</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0we2s0b</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="DataStoreReference_0rce1no" name="Atualizar saldo Banco de dados" />
+    <bpmn:task id="Activity_1uowisi" name="Aguardar Notificação de pagamento(Webhook)">
+      <bpmn:incoming>Flow_1ejdtat</bpmn:incoming>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1tmqdd3">
+        <bpmn:targetRef>DataStoreReference_0rce1no</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:subProcess id="Activity_0hknll0" name="Chamar API asaas para criar o QRcode">
+      <bpmn:incoming>Flow_1b0wowx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ejdtat</bpmn:outgoing>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1xx6mtc">
+      <bpmndi:BPMNShape id="Participant_1p9bpg5_di" bpmnElement="Participant_1p9bpg5" isHorizontal="true">
+        <dc:Bounds x="192" y="82" width="1088" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hbbttz_di" bpmnElement="Event_1hbbttz">
+        <dc:Bounds x="252" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yg06c8_di" bpmnElement="Activity_0yg06c8">
+        <dc:Bounds x="340" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_15fwbmc_di" bpmnElement="Flow_15fwbmc">
+        <di:waypoint x="288" y="120" />
+        <di:waypoint x="314" y="120" />
+        <di:waypoint x="314" y="150" />
+        <di:waypoint x="340" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_15j7tma_di" bpmnElement="Participant_15j7tma" isHorizontal="true">
+        <dc:Bounds x="192" y="350" width="1088" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_028bv0h_di" bpmnElement="Activity_028bv0h">
+        <dc:Bounds x="240" y="390" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17pkxu9_di" bpmnElement="Event_17pkxu9">
+        <dc:Bounds x="1182" y="512" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0rce1no_di" bpmnElement="DataStoreReference_0rce1no">
+        <dc:Bounds x="895" y="425" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="879" y="387.5" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1jozlug" bpmnElement="Activity_1uowisi">
+        <dc:Bounds x="650" y="370" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hknll0_di" bpmnElement="Activity_0hknll0" isExpanded="true">
+        <dc:Bounds x="420" y="430" width="140" height="120" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1b0wowx_di" bpmnElement="Flow_1b0wowx">
+        <di:waypoint x="340" y="450" />
+        <di:waypoint x="420" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ejdtat_di" bpmnElement="Flow_1ejdtat">
+        <di:waypoint x="560" y="490" />
+        <di:waypoint x="630" y="490" />
+        <di:waypoint x="630" y="410" />
+        <di:waypoint x="650" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03iqa8z_di" bpmnElement="Flow_03iqa8z">
+        <di:waypoint x="390" y="190" />
+        <di:waypoint x="390" y="275" />
+        <di:waypoint x="290" y="275" />
+        <di:waypoint x="290" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1tmqdd3_di" bpmnElement="DataOutputAssociation_1tmqdd3">
+        <di:waypoint x="750" y="419" />
+        <di:waypoint x="895" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0csaqft_di" bpmnElement="DataInputAssociation_0csaqft">
+        <di:waypoint x="945" y="457" />
+        <di:waypoint x="1183" y="525" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
